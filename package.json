@@ -4,8 +4,8 @@
   "description": "aplication books",
   "main": "dbConection.js",
   "scripts": {
-    "start": "node dbConection.js",
-    "dev": "nodemon -L dbConection.js",
+    "start": "node app.js",
+    "dev": "nodemon -L app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "yenn",
