@@ -1,7 +1,9 @@
 const userModel = require("../models/userModels");
 const bcrypt = require("bcryptjs"); //to encrypt passwords
+usernameEqualsException = require("../exceptions/usernameEqualsException");
 
 //async function create(userParam) {
+
 //    //const user = new userModel(userParam);
 //
 //    // hash password
@@ -12,14 +14,15 @@ const bcrypt = require("bcryptjs"); //to encrypt passwords
 //}
 
 exports.createUser = async user => {
+	let juan = await userModel.findOne({ username: user.username });
+	// validat
+	if (juan) {
+		throw new usernameEqualsException();
+	}
+
 	if (user.password) {
 		const hashedPassword = bcrypt.hashSync(user.password, 10); // hash password
 		user.password = hashedPassword;
 	}
 	return await userModel.create(user);
 };
-
-//if (await userModel.findOne({ username: user.username })) {
-// validate
-//	throw 'Username "' + user.username + '" username ya existe!';
-//}
