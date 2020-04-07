@@ -17,12 +17,22 @@ function errorHandler(err, req, res, next) {
 		});
 	}
 
-	if (err.name === "ValidationError") {
-		// mongoose validation error
-		return res.status(400).json({ message: err.message });
+	// mongoose validation user already exists
+	if (err.name === "usernameEqualsException") {
+		return res.status(401).json({ status: err.status, message: err.message });
 	}
+
+	// mongoose validation username not Exist
+	if (err.name === "userNotExistsException") {
+		return res.status(404).json({ status: err.status, message: err.message });
+	}
+
+	// mongoose valid password
+	if (err.name === "validNotPasswordException") {
+		return res.status(401).json({ status: err.status, message: err.message });
+	}
+
+	// default to 500 server error
+	err.message = "Se ha presentado un error en la ";
+	return res.status(500).json({ message: err.message });
 }
-//
-//	// default to 500 server error
-//	return res.status(500).json({ message: err.message });
-//}
