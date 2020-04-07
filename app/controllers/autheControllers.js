@@ -1,4 +1,4 @@
-const serviceAuthe = require("../services/userServices");
+const serviceAuthe = require("../services/autheServices");
 
 //function register(req, res) {
 //    serviceAuthe
@@ -26,15 +26,10 @@ const serviceAuthe = require("../services/userServices");
 //	}
 //};
 
-exports.signUp = async (req, res) => {
-	const user = await (await serviceAuthe.createUser(req.body)).toObject();
-	serviceAuthe
-		.createUser(req.body)
-		.then(resul => {
-			delete user.password;
-			res.status(201).send(user);
-		})
-		.catch(err => {
-			res.status(500).send({ error: "El usuario no ha podido ser creado" });
-		});
+exports.signIn = async (req, res) => {
+	const token = await serviceAuthe.signIn(req.body);
+	if (!token) {
+		res.status(401).send({ error: "Autenticación fallida" });
+	}
+	res.status(200).json({ token: token });
 };
