@@ -34,3 +34,25 @@ module.exports = env;
 
 // error si ya estas autenticado
 // al loguearse y no existen ni el usuario ni la contraseña
+
+//cuando se vence el token
+
+//No mostrar ninguna contraseña en ningun lado.
+
+/*cuando se va a crear un usuario y solo se pasan ""
+{
+  "name": "",
+  "username": "tobon",
+  "password": "1234"
+}*/
+
+/*
+ */
+
+/*
+ */
+
+/*
+ */
+/*
+ */

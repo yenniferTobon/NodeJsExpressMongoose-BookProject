@@ -18,18 +18,33 @@ exports.createUser = async user => {
 	return await userModel.create(user);
 };
 
-/*exports.allUsr = async (req, res) => {
-	console.log("entro al servicio");
-
-	const users = await userModel.find({});
-	//.toArray();
-	return users;
-};*/
-
-exports.allUsr = async (req, res) => {
+exports.allUsr = async () => {
 	let allusers = await userModel.find({});
-	if (!allusers) {
-		res.status(400).send({ error: "No hay usuariosssss" });
-	}
 	return allusers;
+};
+
+exports.getUserToId = async id => {
+	const infoUser = await userModel.findById(id);
+	/*	function (err, infouserid) {
+		if (err) {
+			throw err;
+		}
+		if (!infouserid) {
+			res.send(404);
+		}
+		return infouserid;
+	});*/
+	return infoUser;
+};
+
+exports.patchUserToId = async (id, infoChange) => {
+	const infoUserPatch = await userModel.findByIdAndUpdate(id, infoChange, {
+		new: true
+	});
+	return infoUserPatch;
+};
+
+exports.removeUserToId = async id => {
+	const removeUserPatch = await userModel.findByIdAndRemove(id);
+	return removeUserPatch;
 };
