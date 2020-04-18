@@ -3,19 +3,18 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const config = require("../configs/config");
 const userNotExistsException = require("../exceptions/userNotExistsException");
-const validNotPasswordException = require("../exceptions/validNotPasswordException");
+const invalidPasswordException = require("../exceptions/invalidPasswordException");
 
-exports.signIn = async (user, pass) => {
-	let userExist = await userModel.findOne({ username: user.username }); //
+exports.signIn = async (usrname, pass) => {
+	let userExist = await userModel.findOne({ username: usrname }); //
 	if (!userExist) {
-		throw new userNotExistsException();
+		throw new userNotExistsException("el username" + usrname);
 	}
 
 	//return the token by the user id
-	const validPassword = await bcrypt.compare(user.password, userExist.password);
+	const validPassword = await bcrypt.compare(pass, userExist.password);
 	if (!validPassword) {
-		console.log(validPassword);
-		throw new validNotPasswordException();
+		throw new invalidPasswordException();
 	}
 
 	//return the token by the user id

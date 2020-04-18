@@ -1,6 +1,6 @@
 class userNotExistsException extends Error {
-	constructor() {
-		super(" Error, User no fue encontrado");
+	constructor(field) {
+		super(" Error, " + field + " no fue encontrado");
 		this.name = "userNotExistsException";
 		this.status = 404;
 	}

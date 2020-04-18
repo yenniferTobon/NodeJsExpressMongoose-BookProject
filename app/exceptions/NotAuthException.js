@@ -1,7 +1,8 @@
 class NotAuthException extends Error {
-	constructor() {
-		super("Usuario no autorizado");
+	constructor(field) {
+		super(field);
 		this.status = 401;
+		this.name = "NotAuthException";
 	}
 }
 
