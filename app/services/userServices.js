@@ -38,7 +38,7 @@ exports.getUserToId = async userId => {
 };
 
 exports.patchUserToId = async (id, infoChange) => {
-	if (!Id) {
+	if (!id) {
 		throw new ReqFieldException("el Id");
 	}
 	if (!infoChange) {
