@@ -12,7 +12,8 @@ function errorHandler(err, req, res, next) {
 		err.name === "userNotExistsException" ||
 		err.name === "invalidPasswordException" ||
 		err.name === "ReqFieldException" ||
-		err.name === "NotAuthException"
+		err.name === "NotAuthException" ||
+		err.name === "bookExistsException"
 	) {
 		return res.status(status).send({
 			status: status,
