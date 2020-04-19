@@ -1,33 +1,16 @@
 const serviceAuthe = require("../services/autheServices");
-
-//function register(req, res) {
-//    serviceAuthe
-//        .create(req.body)
-//        .then(() => res.json({}))
-//        .catch(err => next(err));
-//}
-
-//exports.singUp = async (req, res) => {
-//    const user = await serviceAuthe.signUp(req.body);
-//    return res.status(201).send(user);
-//};
-//exports.signUp = async (req, res) => {
-//	try {
-//		const user = await serviceAuthe.createUser(req.body);
-//		if (!user) {
-//			return res
-//				.status(500)
-//				.send({ error: "El usuario no ha podido ser creado" });
-//		}
-//		return res.status(201).send(user);
-//	} catch (err) {
-//		console.log(err);
-//		res.status(500).send({ error: err.message });
-//	}
-//};
+const ReqFieldException = require("../exceptions/ReqFieldException");
 
 exports.signIn = async (req, res) => {
-	const token = await serviceAuthe.signIn(req.body);
+	const username = req.body.username;
+	const pass = req.body.password;
+	if (!username) {
+		throw new ReqFieldException("Username");
+	}
+	if (!pass) {
+		throw new ReqFieldException("Password");
+	}
+	const token = await serviceAuthe.signIn(username, pass);
 	if (!token) {
 		res.status(401).send({ error: "Autenticación fallida" });
 	}
