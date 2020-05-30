@@ -53,10 +53,10 @@ exports.addBookFavorite = async (idUser, idBook) => {
 };
 
 exports.deleteBookFavorite = async (idUser, idBook) => {
-    const infoUser = userModel.findOneAndRemove(
+    const infoUser = userModel.findOneAndUpdate(
         { _id: idUser },
         {
-            $push: { favoritos: idBook }
+            $pull: { favoritos: idBook }
         },
         { new: true }
     );
