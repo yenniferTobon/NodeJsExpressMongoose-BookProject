@@ -45,9 +45,6 @@ exports.removeBookId = async (req, res) => {
 exports.addFavorite = async (req, res) => {
     let infoUserResult;
     if (req.user) {
-        /*let infoUser = await (await serviceUser.getUserToId(req.user)).populate(
-			book
-		);*/
         infoUserResult = await serviceBook.addBookFavorite(
             req.user,
             req.params.libroId

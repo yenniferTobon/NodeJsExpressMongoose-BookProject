@@ -47,6 +47,9 @@ exports.removeBookToId = async (id) => {
 };
 
 exports.addBookFavorite = async (idUser, idBook) => {
+    console.log('Entro aca');
+    console.log(idUser);
+    console.log(idBook);
     const infoUser = userModel.findByIdAndUpdate(idUser, {
         $set: { favoritos: { id: idBook } }
     });
