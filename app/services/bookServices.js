@@ -1,6 +1,5 @@
 const bookModel = require('../models/bookModels');
 const bookExistsException = require('../exceptions/bookExistsException');
-//const db = require("../../app");
 const bookservice = require('./bookServices');
 const userModel = require('../models/userModels');
 const serviceUser = require('../services/userServices');
@@ -20,11 +19,6 @@ exports.getAllBooksExist = async (queryBook) => {
     return infoAllbook;
 };
 exports.createOneBook = async (book) => {
-    /*let bookExist = await bookModel.findOne({ username: book.username });
-	// validat 
-	if (bookExist) {
-		throw new usernameEqualsException();
-	}*/
     return await bookModel.create(book);
 };
 
@@ -47,13 +41,26 @@ exports.removeBookToId = async (id) => {
 };
 
 exports.addBookFavorite = async (idUser, idBook) => {
-    console.log('Entro aca');
-    console.log(idUser);
-    console.log(idBook);
-    const infoUser = userModel.findByIdAndUpdate(idUser, {
-        $set: { favoritos: { id: idBook } }
-    });
+    const infoUser = userModel.findOneAndUpdate(
+        { _id: idUser },
+        {
+            $push: { favoritos: idBook }
+        },
+        { safe: true, new: true }
+    );
 
+    return infoUser;
+};
+
+exports.deleteBookFavorite = async (idUser, idBook) => {
+    const infoUser = userModel.findOneAndRemove(
+        { _id: idUser },
+        {
+            $push: { favoritos: idBook }
+        },
+        { new: true }
+    );
+    console.log('entro a delete');
     return infoUser;
 };
 

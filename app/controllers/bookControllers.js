@@ -1,4 +1,5 @@
 const serviceBook = require('../services/bookServices');
+const bookExistsException = require('../exceptions/bookExistsException');
 
 exports.getAllBooks = async (req, res) => {
     const allBooks = await serviceBook.getAllBooksExist(req.query);
@@ -45,7 +46,32 @@ exports.removeBookId = async (req, res) => {
 exports.addFavorite = async (req, res) => {
     let infoUserResult;
     if (req.user) {
+        let isFavorite = await serviceBook.isBookFavorite(
+            req.user,
+            req.params.libroId
+        );
+        if (isFavorite === 'True') {
+            throw new bookExistsException(req.params.libroId);
+        }
         infoUserResult = await serviceBook.addBookFavorite(
+            req.user,
+            req.params.libroId
+        );
+    }
+    res.status(201).send(infoUserResult);
+};
+
+exports.deleteFavorite = async (req, res) => {
+    let infoUserResult;
+    if (req.user) {
+        let isFavorite = await serviceBook.isBookFavorite(
+            req.user,
+            req.params.libroId
+        );
+        /*if (isFavorite === 'False') {
+            throw new bookExistsException(req.params.libroId);
+        }*/
+        infoUserResult = await serviceBook.deleteBookFavorite(
             req.user,
             req.params.libroId
         );

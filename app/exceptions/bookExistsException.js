@@ -1,6 +1,6 @@
 class bookExistsException extends Error {
     constructor(field) {
-        super('No se ha enviado ' + field + ' que es requerido');
+        super('El libro ' + field + ' ya es Favorito');
         this.name = 'bookExistsException';
         this.status = 404;
     }
